@@ -31,7 +31,12 @@ export default function LoginPage() {
     } catch (err) {
       if (isAxiosError(err)) {
         const body = err.response?.data as { message?: string } | undefined;
-        setError(body?.message ?? err.message ?? "Login failed.");
+        const msg = body?.message ?? err.message ?? "Login failed.";
+        setError(
+          err.response?.status === 503
+            ? `${msg} Then restart the dev server.`
+            : msg,
+        );
       } else {
         setError("Login failed.");
       }

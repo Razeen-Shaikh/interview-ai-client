@@ -51,12 +51,15 @@ export default function DashboardPage() {
     } catch (err) {
       if (isAxiosError(err)) {
         const body = err.response?.data as { message?: string; code?: string } | undefined;
-        if (
-          body?.code === "OPENAI_NOT_CONFIGURED" ||
-          body?.code === "AI_NOT_CONFIGURED"
-        ) {
+        if (body?.code === "AI_NOT_CONFIGURED") {
           setError(
-            `${body.message ?? "OpenAI is not configured."} Use Practice tests instead.`,
+            `${body.message ?? "AI is not configured."} Use Practice tests instead.`,
+          );
+          return;
+        }
+        if (body?.code === "OPENAI_INSUFFICIENT_QUOTA") {
+          setError(
+            `${body.message ?? "AI quota exceeded."} Try Practice tests or wait and retry.`,
           );
           return;
         }

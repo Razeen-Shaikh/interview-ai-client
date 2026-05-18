@@ -1,19 +1,15 @@
 import type { NextConfig } from "next";
 
-const API_ORIGIN =
-  process.env.API_URL?.replace(/\/+$/, "") ??
-  process.env.NEXT_PUBLIC_API_URL?.replace(/\/+$/, "") ??
-  "https://interview-ai-server-nu.vercel.app";
-
 const nextConfig: NextConfig = {
-  async rewrites() {
-    return [
-      {
-        source: "/api/:path*",
-        destination: `${API_ORIGIN}/api/:path*`,
-      },
-    ];
-  },
+  serverExternalPackages: [
+    "mongoose",
+    "mongodb",
+    "bson",
+    "jsonwebtoken",
+    "bcryptjs",
+    "openai",
+    "@google/generative-ai",
+  ],
 };
 
 export default nextConfig;

@@ -12,19 +12,16 @@ export const registerUser = async (data: {
   password: string;
 }) => {
   const response = await api.post("/auth/register", data);
-
   return response.data;
 };
 
 export const loginUser = async (data: { email: string; password: string }) => {
   const response = await api.post("/auth/login", data);
-
   return response.data;
 };
 
 export const getCurrentUser = async () => {
   const response = await api.get("/auth/me");
-
   return response.data as { success: boolean; user?: AuthUser };
 };
 
@@ -41,6 +38,5 @@ export const fetchSession = async (): Promise<AuthUser | null> => {
 
 export const logoutUser = async () => {
   const response = await api.post("/auth/logout");
-
   return response.data;
 };

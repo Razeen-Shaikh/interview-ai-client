@@ -1,21 +1,15 @@
 import axios from "axios";
 
+const DEFAULT_API_ORIGIN = "https://interview-ai-server-nu.vercel.app";
+
 /**
  * API base URL ending in `/api`.
- * In the browser, uses the same hostname as the page (e.g. 127.0.0.1 vs localhost)
- * so the auth cookie set by Express on port 5000 matches the site origin.
+ * Defaults to the deployed server; override with NEXT_PUBLIC_API_URL for local dev.
  */
 export function resolveApiBaseURL(): string {
   const env = process.env.NEXT_PUBLIC_API_URL?.trim();
-  if (env) {
-    const base = env.replace(/\/+$/, "");
-    return base.endsWith("/api") ? base : `${base}/api`;
-  }
-  if (typeof window !== "undefined") {
-    const { protocol, hostname } = window.location;
-    return `${protocol}//${hostname}:5000/api`;
-  }
-  return "http://localhost:5000/api";
+  const origin = env ? env.replace(/\/+$/, "") : DEFAULT_API_ORIGIN;
+  return origin.endsWith("/api") ? origin : `${origin}/api`;
 }
 
 const api = axios.create({

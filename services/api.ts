@@ -8,7 +8,7 @@ function isLocalDevHost(hostname: string): boolean {
 
 /**
  * API base URL ending in `/api`.
- * Deployed client uses same-origin `/api` (Next rewrite → server). Local dev
+ * Deployed client uses same-origin `/api` (proxied to the API via next.config). Local dev
  * calls the remote API directly. Override with NEXT_PUBLIC_API_URL if needed.
  */
 export function resolveApiBaseURL(): string {
